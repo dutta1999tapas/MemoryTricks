@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Mastery Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 sm:p-8 font-sans text-slate-800">
+    
+    <!-- Header Section -->
+    <header class="max-w-5xl mx-auto text-center mb-10 pt-8">
+        <div class="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-2xl mb-4 text-indigo-600">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Memory Mastery Chart
+        </h1>
+        <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+            A visual mnemonic guide to remember historical dates and years by Tapas Dutta.
+        </p>
+    </header>
+
+    <!-- Tabs / Toggle -->
+    <div class="flex justify-center mb-12">
+        <div class="bg-slate-200/70 backdrop-blur-sm p-1.5 rounded-3xl flex flex-col sm:flex-row gap-2 shadow-inner w-full sm:w-auto">
+            <button id="tab-rhyme" onclick="switchTab('rhyme')" class="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-white text-indigo-600 shadow-md scale-100 w-full sm:w-auto">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                Rhyming Method (0-10)
+            </button>
+            <button id="tab-shape" onclick="switchTab('shape')" class="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 text-slate-500 hover:text-slate-700 hover:bg-slate-200 scale-95 w-full sm:w-auto">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                Shape Method (11-19)
+            </button>
+        </div>
+    </div>
+
+    <!-- Info Banner -->
+    <div class="max-w-5xl mx-auto mb-8">
+        <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 sm:p-5 flex items-start sm:items-center gap-4 text-indigo-800">
+            <div id="info-icon" class="bg-indigo-200 rounded-full p-2 shrink-0 text-indigo-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+                <h4 id="info-title" class="font-bold text-lg mb-1">
+                    How it works: Rhyming
+                </h4>
+                <p id="info-desc" class="text-indigo-600 font-medium text-sm sm:text-base">
+                    Numbers 0-10 are mapped to words that sound similar (e.g., One ➔ Sun). Use these objects to create a vivid mental story.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid of Cards -->
+    <div id="cards-container" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 pb-20 fade-in">
+        <!-- Cards will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        const rhymingMnemonics = [
+            { num: 0, mainWord: 'Hero', subWords: 'Freedom Fighter / Actor', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M20 20 L80 20 L80 50 Q80 90 50 95 Q20 90 20 50 Z" fill="#3B82F6"/><path d="M50 35 L55 45 L65 45 L57 52 L60 62 L50 56 L40 62 L43 52 L35 45 L45 45 Z" fill="#FBBF24"/></svg>` },
+            { num: 1, mainWord: 'Sun', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="#FBBF24"/><g stroke="#F59E0B" stroke-width="6" stroke-linecap="round"><line x1="50" y1="12" x2="50" y2="4"/><line x1="50" y1="88" x2="50" y2="96"/><line x1="12" y1="50" x2="4" y2="50"/><line x1="88" y1="50" x2="96" y2="50"/><line x1="23" y1="23" x2="17" y2="17"/><line x1="77" y1="77" x2="83" y2="83"/><line x1="23" y1="77" x2="17" y2="83"/><line x1="77" y1="23" x2="83" y2="17"/></g></svg>` },
+            { num: 2, mainWord: 'Shoe', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M15 75 L85 75 Q95 75 95 65 L85 55 L70 50 L55 40 L35 40 Q25 40 20 50 Z" fill="#4F46E5"/><path d="M15 75 L85 75 Q95 75 95 85 L15 85 Z" fill="#94A3B8"/><path d="M35 40 L45 60" stroke="#FFF" stroke-width="3"/></svg>` },
+            { num: 3, mainWord: 'Tree', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M40 95 L60 95 L55 50 L45 50 Z" fill="#92400E"/><circle cx="50" cy="35" r="30" fill="#22C55E"/><circle cx="30" cy="50" r="22" fill="#16A34A"/><circle cx="70" cy="50" r="22" fill="#16A34A"/></svg>` },
+            { num: 4, mainWord: 'Door', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M25 25 Q50 5 75 25 L75 95 L25 95 Z" fill="#B45309"/><rect x="35" y="30" width="30" height="25" rx="4" fill="#78350F"/><rect x="35" y="60" width="30" height="25" rx="4" fill="#78350F"/><circle cx="68" cy="55" r="4" fill="#FBBF24"/></svg>` },
+            { num: 5, mainWord: 'Knife', subWords: 'Wife', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M15 85 L30 70 L45 85 L30 100 Z" fill="#334155"/><path d="M30 70 L90 10 Q95 15 85 40 L45 85 Z" fill="#CBD5E1"/><line x1="22" y1="78" x2="38" y2="92" stroke="#94A3B8" stroke-width="2"/></svg>` },
+            { num: 6, mainWord: 'Vicks', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="30" y="40" width="40" height="50" rx="8" fill="#0284C7"/><path d="M25 25 L75 25 L70 40 L30 40 Z" fill="#16A34A"/><rect x="35" y="55" width="30" height="20" rx="4" fill="#F0F9FF"/><path d="M40 65 L60 65 M40 70 L50 70" stroke="#0284C7" stroke-width="3" stroke-linecap="round"/></svg>` },
+            { num: 7, mainWord: 'Heaven', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><circle cx="50" cy="65" r="25" fill="#E0F2FE"/><circle cx="30" cy="75" r="18" fill="#BAE6FD"/><circle cx="70" cy="75" r="18" fill="#BAE6FD"/><ellipse cx="50" cy="30" rx="30" ry="8" fill="none" stroke="#FBBF24" stroke-width="5"/></svg>` },
+            { num: 8, mainWord: 'Plate', subWords: 'Great', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#E2E8F0"/><circle cx="50" cy="50" r="30" fill="#F8FAFC"/><rect x="18" y="25" width="6" height="50" rx="3" fill="#94A3B8"/><path d="M82 25 Q88 35 88 45 L85 75 L79 75 L76 45 Q76 35 82 25 Z" fill="#94A3B8"/></svg>` },
+            { num: 9, mainWord: 'Sign', subWords: 'Wine / Dine', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="20" y="15" width="55" height="75" rx="2" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="3"/><path d="M30 35 L60 35 M30 55 L55 55 M30 75 Q40 65 50 80 T70 70" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M70 85 L90 40 L95 45 L75 90 Z" fill="#FBBF24"/><path d="M70 85 L75 90 L68 95 Z" fill="#1E293B"/></svg>` },
+            { num: 10, mainWord: 'Hen', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M30 75 Q10 50 30 25 Q50 25 60 45 L85 45 L75 60 L65 60 Q60 85 40 85 Z" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/><path d="M40 25 Q45 5 55 25 Z" fill="#EF4444"/><circle cx="48" cy="38" r="4" fill="#0F172A"/><path d="M85 45 L95 50 L85 55 Z" fill="#F59E0B"/><path d="M40 85 L35 95 M50 85 L55 95" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/></svg>` },
+        ];
+
+        const shapeMnemonics = [
+            { num: 11, mainWord: 'Pillars', subWords: 'Shape of two pillars', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="15" y="80" width="70" height="10" rx="2" fill="#94A3B8"/><rect x="15" y="10" width="70" height="10" rx="2" fill="#94A3B8"/><rect x="25" y="20" width="15" height="60" fill="#E2E8F0"/><rect x="60" y="20" width="15" height="60" fill="#E2E8F0"/></svg>` },
+            { num: 12, mainWord: 'Duck', subWords: 'Shape of 2', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><circle cx="75" cy="35" r="20" fill="#FBBF24"/><path d="M80 35 Q100 35 95 45 Q80 45 75 40 Z" fill="#F97316"/><path d="M15 70 Q15 45 50 45 Q75 45 85 70 Q85 90 50 90 Q15 90 15 70 Z" fill="#FBBF24"/><circle cx="68" cy="30" r="4" fill="#1E293B"/></svg>` },
+            { num: 13, mainWord: 'Heart', subWords: 'Shape of 3', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M50 90 C 20 60, 5 35, 15 20 C 25 5, 45 10, 50 25 C 55 10, 75 5, 85 20 C 95 35, 80 60, 50 90 Z" fill="#EF4444"/><path d="M25 25 C 30 15, 40 15, 45 25" stroke="#FCA5A5" stroke-width="4" stroke-linecap="round" fill="none"/></svg>` },
+            { num: 14, mainWord: 'Chair', subWords: 'Shape of 4', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="25" y="15" width="8" height="45" rx="2" fill="#92400E"/><rect x="67" y="15" width="8" height="45" rx="2" fill="#92400E"/><rect x="25" y="30" width="50" height="8" fill="#B45309"/><rect x="25" y="45" width="50" height="8" fill="#B45309"/><rect x="20" y="60" width="60" height="10" rx="3" fill="#D97706"/><rect x="25" y="70" width="8" height="25" rx="2" fill="#92400E"/><rect x="67" y="70" width="8" height="25" rx="2" fill="#92400E"/></svg>` },
+            { num: 15, mainWord: 'Hook', subWords: 'Shape of 5', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M35 25 L65 25 L65 55 Q65 85 45 85 Q25 85 25 65 L40 65 Q40 70 45 70 Q50 70 50 55 L50 25 Z" fill="#94A3B8"/><circle cx="50" cy="15" r="8" fill="#64748B"/></svg>` },
+            { num: 16, mainWord: 'Hockey', subWords: 'Shape of 6', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M20 80 L80 20 L88 28 L28 88 Z" fill="#B45309"/><path d="M15 85 L40 95 L32 100 L10 90 Z" fill="#92400E"/><ellipse cx="75" cy="85" rx="12" ry="6" fill="#1E293B"/></svg>` },
+            { num: 17, mainWord: 'Lamp', subWords: 'Road lamp shape of 7', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="45" y="45" width="10" height="50" fill="#334155"/><path d="M30 45 L70 45 L55 15 L45 15 Z" fill="#FBBF24"/><path d="M25 45 L75 45 L75 50 L25 50 Z" fill="#1E293B"/><circle cx="50" cy="10" r="6" fill="#1E293B"/><path d="M35 45 L65 45 L55 25 L45 25 Z" fill="#FEF08A"/></svg>` },
+            { num: 18, mainWord: 'Specs', subWords: 'Audi / Infinity (Shape of 8)', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><rect x="10" y="40" width="35" height="25" rx="8" fill="#F0F9FF" stroke="#0F172A" stroke-width="6"/><rect x="55" y="40" width="35" height="25" rx="8" fill="#F0F9FF" stroke="#0F172A" stroke-width="6"/><path d="M45 50 Q50 45 55 50" fill="none" stroke="#0F172A" stroke-width="5"/><path d="M10 45 Q5 40 15 20" fill="none" stroke="#0F172A" stroke-width="5"/><path d="M90 45 Q95 40 85 20" fill="none" stroke="#0F172A" stroke-width="5"/></svg>` },
+            { num: 19, mainWord: 'Umbrella', subWords: 'Parachute (Shape of 9)', svg: `<svg class="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300" viewBox="0 0 100 100"><path d="M10 55 Q50 5 90 55 Z" fill="#EC4899"/><path d="M30 55 Q50 5 70 55 Z" fill="#3B82F6"/><path d="M50 55 L50 85 Q45 95 35 90 L35 85" fill="none" stroke="#1E293B" stroke-width="5" stroke-linecap="round"/><rect x="47" y="5" width="6" height="8" rx="2" fill="#1E293B"/></svg>` },
+        ];
+
+        function renderCards(data) {
+            const container = document.getElementById('cards-container');
+            
+            // Trigger animation restart
+            container.classList.remove('fade-in');
+            void container.offsetWidth; 
+            container.classList.add('fade-in');
+            
+            container.innerHTML = ''; // Clear current cards
+
+            data.forEach(item => {
+                const subWordsHtml = item.subWords 
+                    ? `<p class="text-xs sm:text-sm text-slate-500 font-semibold mt-1 leading-snug">${item.subWords}</p>` 
+                    : '';
+
+                const cardHtml = `
+                    <div class="group bg-white rounded-3xl p-5 sm:p-6 flex items-center shadow-sm border border-slate-200 hover:shadow-xl hover:border-indigo-200 hover:-translate-y-1 transition-all duration-300 gap-5">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl flex items-center justify-center text-indigo-600 font-black text-3xl sm:text-4xl shadow-inner border border-white group-hover:from-indigo-100 group-hover:to-purple-100 transition-colors">
+                            ${item.num}
+                        </div>
+                        <div class="shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20">
+                            ${item.svg}
+                        </div>
+                        <div class="flex flex-col justify-center border-l-2 border-slate-100 pl-4 sm:pl-5">
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">
+                                ${item.mainWord}
+                            </h3>
+                            ${subWordsHtml}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        function switchTab(tabType) {
+            const btnRhyme = document.getElementById('tab-rhyme');
+            const btnShape = document.getElementById('tab-shape');
+            const infoTitle = document.getElementById('info-title');
+            const infoDesc = document.getElementById('info-desc');
+
+            const activeClasses = ['bg-white', 'text-indigo-600', 'shadow-md', 'scale-100'];
+            const inactiveClasses = ['text-slate-500', 'hover:text-slate-700', 'hover:bg-slate-200', 'scale-95'];
+
+            if (tabType === 'rhyme') {
+                btnRhyme.classList.remove(...inactiveClasses);
+                btnRhyme.classList.add(...activeClasses);
+                btnShape.classList.remove(...activeClasses);
+                btnShape.classList.add(...inactiveClasses);
+
+                infoTitle.innerText = 'How it works: Rhyming';
+                infoDesc.innerText = 'Numbers 0-10 are mapped to words that sound similar (e.g., One ➔ Sun). Use these objects to create a vivid mental story.';
+
+                renderCards(rhymingMnemonics);
+            } else {
+                btnShape.classList.remove(...inactiveClasses);
+                btnShape.classList.add(...activeClasses);
+                btnRhyme.classList.remove(...activeClasses);
+                btnRhyme.classList.add(...inactiveClasses);
+
+                infoTitle.innerText = 'How it works: Shapes';
+                infoDesc.innerText = 'Numbers 11-19 are mapped to real-world objects that look like the physical shape of the number (e.g., 14 looks like a chair).';
+
+                renderCards(shapeMnemonics);
+            }
+        }
+
+        // Initialize with Rhyming tab on load
+        switchTab('rhyme');
+    </script>
+</body>
+</html>
+
+
