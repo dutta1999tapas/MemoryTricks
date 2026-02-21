@@ -1,0 +1,2 @@
+# MemoryTricks
+Mnemonics Memory Trick
